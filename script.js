@@ -24,7 +24,7 @@ async function getChefBirthday(id) {
    
     return { 
         ...ricetta, 
-        chefDetails: utente // Inserimento dati per lo chef 
+        chefDetails: utente // Inserimento dati per lo chef e unito tutto qui
     };
 }
 
