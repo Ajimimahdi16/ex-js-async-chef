@@ -13,26 +13,23 @@ async function ricettaJson(url) {
 
 async function getChefBirthday(id) {
 
-    const ricetta = await ricettaJson(`https://dummyjson.com/recipes/${id}`);
-    
-    // Recupero userId direttamente dai dati della ricetta
-    const userId = ricetta.userId; 
+    const ricetta = await fetch(`https://dummyjson.com/recipes/${id}`);
+
+    const recipe = await ricetta.json();
     
     // Faccio la seconda chiamata per l'utente
-    const utente = await ricettaJson(`https://dummyjson.com/users/${userId}`);
+    const utente = await fetch(`https://dummyjson.com/users/${recipe.userId}`);
+
+    const chef = await utente.json();
     
-   
-    return { 
-        ...ricetta, 
-        chefDetails: utente // Inserimento dati per lo chef e unito tutto qui
-    };
+    return chef.birthDate;
 }
 
 
 (async () => {
    try {
-       const ricetta = await getChefBirthday(1);
-       console.log("La ricetta dello chef:", ricetta);
+       const birthday = await getChefBirthday(1);
+       console.log("data di nascita dello chef ", birthday);
    } catch (error) {
        console.error("Errore durante il recupero dei dati:", error);
    }
